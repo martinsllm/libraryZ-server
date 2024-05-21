@@ -1,9 +1,11 @@
 import { ModelStatic } from 'sequelize';
+import md5 from 'md5';
 import User from '../database/models/User';
-import resp from '../utils/resp';
+import {resp, respM} from '../utils/resp';
 import { sign } from '../jwt/jwt';
 import { IUser } from '../interfaces/IUser';
-import md5 from 'md5';
+import schema from './validation/schema';
+
 
 
 
@@ -16,12 +18,16 @@ class UserService {
     }
 
     async create(user: IUser) {
-        const userCreated = await this.model.create({
+        const { error } = schema.user.validate(user);
+
+        if(error) return respM(422, error.message);
+
+        const createdUser = await this.model.create({
             ...user,
             password: md5(user.password)
         })
 
-        return resp(201, userCreated);
+        return resp(201, createdUser);
     }
 
     async login(body: { email: string, password: string }) {
@@ -34,7 +40,7 @@ class UserService {
             }
         });
 
-        if(!user) return resp(404, { message: 'User not found!' });
+        if(!user) return respM(404, 'User not found!');
 
         const { id, email } = user as User;
 
