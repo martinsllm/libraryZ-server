@@ -11,10 +11,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "joi": "^17.13.1",
+    "jsonwebtoken": "^9.0.2",
     "md5": "^2.3.0",
     "pg": "^8.11.5",
     "pg-hstore": "^2.3.4",
@@ -30,5 +32,4 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
-
 }
