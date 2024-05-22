@@ -6,9 +6,6 @@ import { sign } from '../jwt/jwt';
 import { IUser } from '../interfaces/IUser';
 import schema from './validation/schema';
 
-
-
-
 class UserService {
     private model: ModelStatic<User> = User;
 
