@@ -12,7 +12,8 @@ module.exports = {
           key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
       },
       sale_id: {
         type: Sequelize.INTEGER,
@@ -22,7 +23,8 @@ module.exports = {
           key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
       },
       quantity: {
         type: Sequelize.INTEGER,
