@@ -40,6 +40,15 @@ class BookController {
         }
     }
 
+    async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { status, message } = await this.service.delete(Number(req.params.id));
+            res.status(status).json(message);
+        } catch (error) {
+            next(error);
+        }
+    }
+
 }
 
 export default BookController;

@@ -52,6 +52,10 @@ class BookService {
     }
 
     async update(book: IBook, id: number) {
+        const { error } = schema.book.validate(book);
+
+        if(error) return respM(422, error.message);
+        
         const foundBook = await this.getOne(id);
 
         if(foundBook.status != 404){
@@ -59,6 +63,20 @@ class BookService {
                 ...book 
             }, { 
                 where: { id } 
+            });
+
+            foundBook.status = 204;
+        }
+
+        return resp(foundBook.status, foundBook.message);
+    }
+
+    async delete(id: number) {
+        const foundBook = await this.getOne(id);
+
+        if(foundBook.status != 404){
+            await this.model.destroy({
+                where: { id }
             });
 
             foundBook.status = 204;
