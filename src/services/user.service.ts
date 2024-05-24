@@ -1,10 +1,10 @@
 import { ModelStatic } from 'sequelize';
 import md5 from 'md5';
+import { IUser } from '../interfaces/IUser';
+import schema from './validation/schema';
 import User from '../database/models/User';
 import {resp, respM} from '../utils/resp';
 import { sign } from '../jwt/jwt';
-import { IUser } from '../interfaces/IUser';
-import schema from './validation/schema';
 
 class UserService {
     private model: ModelStatic<User> = User;

@@ -15,7 +15,7 @@ class BookController {
 
     async getOne(req: Request, res: Response, next: NextFunction) {
         try {
-            const { status, message } = await this.service.getOne(Number(req.params.id));
+            const { status, message } = await this.service.getOne(+req.params.id);
             res.status(status).json(message);
         } catch (error) {
             next(error);
@@ -33,7 +33,7 @@ class BookController {
 
     async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const { status, message } = await this.service.update(req.body, Number(req.params.id));
+            const { status, message } = await this.service.update(req.body, +req.params.id);
             res.status(status).json(message);
         } catch (error) {
             next(error);
@@ -42,7 +42,7 @@ class BookController {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const { status, message } = await this.service.delete(Number(req.params.id));
+            const { status, message } = await this.service.delete(+req.params.id);
             res.status(status).json(message);
         } catch (error) {
             next(error);

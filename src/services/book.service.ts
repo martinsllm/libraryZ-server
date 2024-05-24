@@ -1,16 +1,20 @@
-import { ModelStatic, where } from 'sequelize';
-import Book from '../database/models/Book';
-import { resp, respM } from '../utils/resp';
-import Category from '../database/models/Category';
-import BookCategory from '../database/models/BookCategory';
+import { ModelStatic } from 'sequelize';
 import { IBook } from '../interfaces/IBook';
 import schema from './validation/schema';
+import Book from '../database/models/Book';
+import Category from '../database/models/Category';
+import BookCategory from '../database/models/BookCategory';
+import { resp, respM } from '../utils/resp';
+import CategoryService from './category.service';
+import BookCategoryService from './bookCategory.service';
 
 BookCategory.associations;
 
 class BookService {
 
     private model: ModelStatic<Book> = Book;
+    private category = new CategoryService();
+    private bookCategory = new BookCategoryService();
 
     async get() {
         const books = await this.model.findAll();
@@ -33,20 +37,13 @@ class BookService {
 
         if(error) return respM(422, error.message);
 
-        const categories = await Promise.all(book.categories!.map( async (e) => {
-            return await Category.findByPk(e)
-        }));
+        const categories = await this.category.get(book.categories!);
 
-        if(categories.some((e) => !e)) return respM(404, 'Category not found!');
+        if(categories.status == 404) return respM(categories.status, categories.message);
 
         const createdBook = await this.model.create({ ...book });
 
-        const bookCategory = book.categories!.map((e) => ({
-            bookId: createdBook.id,
-            categoryId: e
-        }));
-
-        await BookCategory.bulkCreate(bookCategory);
+        await this.bookCategory.create(book.categories!, createdBook.id);
 
         return resp(201, createdBook);
     }
