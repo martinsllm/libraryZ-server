@@ -1,6 +1,5 @@
 import { ModelStatic } from 'sequelize';
 import BookCategory from '../database/models/BookCategory';
-import { resp } from '../utils/resp';
 
 class BookCategoryService {
 
@@ -13,8 +12,7 @@ class BookCategoryService {
             categoryId: e
         }));
 
-        await BookCategory.bulkCreate(bookCategory);
-
+        await this.model.bulkCreate(bookCategory);
     }
 }
 

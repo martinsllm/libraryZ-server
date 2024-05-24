@@ -34,11 +34,9 @@ class BookService {
 
     async create(book: IBook) {
         const { error } = schema.book.validate(book);
-
         if(error) return respM(422, error.message);
 
         const categories = await this.category.get(book.categories!);
-
         if(categories.status == 404) return respM(categories.status, categories.message);
 
         const createdBook = await this.model.create({ ...book });
