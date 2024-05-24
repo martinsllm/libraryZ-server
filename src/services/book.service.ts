@@ -1,4 +1,4 @@
-import { ModelStatic } from 'sequelize';
+import { ModelStatic, where } from 'sequelize';
 import Book from '../database/models/Book';
 import { resp, respM } from '../utils/resp';
 import Category from '../database/models/Category';
@@ -49,6 +49,22 @@ class BookService {
         await BookCategory.bulkCreate(bookCategory);
 
         return resp(201, createdBook);
+    }
+
+    async update(book: IBook, id: number) {
+        const foundBook = await this.getOne(id);
+
+        if(foundBook.status != 404){
+            await this.model.update({ 
+                ...book 
+            }, { 
+                where: { id } 
+            });
+
+            foundBook.status = 204;
+        }
+
+        return resp(foundBook.status, foundBook.message);
     }
 
 }
