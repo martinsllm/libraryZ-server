@@ -13,4 +13,8 @@ const book = joi.object({
     categories: joi.array().items(joi.number().required())
 });
 
-export = { user, book };
+const category = joi.object({
+    name: joi.string().min(3).required()
+})
+
+export = { user, book, category };

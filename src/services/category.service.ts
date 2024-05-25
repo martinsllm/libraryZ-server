@@ -1,6 +1,8 @@
 import { ModelStatic } from 'sequelize';
 import Category from '../database/models/Category';
+import { ICategory } from '../interfaces/ICategory';
 import { resp, respM } from '../utils/resp';
+import schema from './validation/schema';
 
 class CategoryService {
 
@@ -27,6 +29,17 @@ class CategoryService {
         if(!category) return respM(404, 'Category not found!')
 
         return resp(200, category);
+    }
+
+    async create(cat: ICategory) {
+        const { error } = schema.category.validate(cat);
+        if(error) return respM(422, error.message);
+
+        const createdCategory = await this.model.create({
+            ...cat
+        });
+
+        return resp(201, createdCategory);
     }
 }
 
