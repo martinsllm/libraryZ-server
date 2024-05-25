@@ -41,6 +41,39 @@ class CategoryService {
 
         return resp(201, createdCategory);
     }
+
+    async update(cat: ICategory, id: number) {
+        const { error } = schema.category.validate(cat);
+        if(error) return respM(422, error.message);
+
+        const foundCategory = await this.getOne(id);
+
+        if(foundCategory.status != 404) {
+            await this.model.update({ 
+                ...cat 
+            }, { 
+                where: { id } 
+            });
+
+            foundCategory.status = 204;
+        }
+
+        return resp(foundCategory.status, foundCategory.message);
+    }
+
+    async delete(id: number) {
+        const foundCategory = await this.getOne(id);
+
+        if(foundCategory.status != 404) {
+            await this.model.destroy({
+                where: { id }
+            });
+
+            foundCategory.status = 204;
+        }
+
+        return resp(foundCategory.status, foundCategory.message);
+    }
 }
 
 export default CategoryService;

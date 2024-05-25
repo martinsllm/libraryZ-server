@@ -16,7 +16,8 @@ Category.init({
     },
     name: {
         type: sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
 }, {
     sequelize: db,
