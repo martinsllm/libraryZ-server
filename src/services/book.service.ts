@@ -3,12 +3,9 @@ import { IBook } from '../interfaces/IBook';
 import schema from './validation/schema';
 import Book from '../database/models/Book';
 import Category from '../database/models/Category';
-import BookCategory from '../database/models/BookCategory';
 import { resp, respM } from '../utils/resp';
 import CategoryService from './category.service';
 import BookCategoryService from './bookCategory.service';
-
-BookCategory.associations;
 
 class BookService {
 

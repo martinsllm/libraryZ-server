@@ -5,6 +5,15 @@ class WishlistController {
 
     private service = new WishlistService;
 
+    async get(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { status, message } = await this.service.get(res.locals.user.id);
+            res.status(status).json(message);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const { status, message } = await this.service.create(+req.params.id, res.locals.user.id);

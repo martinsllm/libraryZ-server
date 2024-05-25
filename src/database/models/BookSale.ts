@@ -19,7 +19,8 @@ BookSale.init({
           key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
     },
     saleId: {
         type: sequelize.INTEGER,
@@ -29,7 +30,8 @@ BookSale.init({
             key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
     },
     quantity: {
         type: sequelize.INTEGER,

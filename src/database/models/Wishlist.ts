@@ -18,7 +18,8 @@ Wishlist.init({
             key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
     },
     userId: {
         type: sequelize.INTEGER,
@@ -28,7 +29,8 @@ Wishlist.init({
           key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
     }
 }, {
     sequelize: db,

@@ -1,12 +1,24 @@
 import { ModelStatic } from 'sequelize';
 import Wishlist from '../database/models/Wishlist';
-import { resp, respM } from '../utils/resp';
+import Book from '../database/models/Book';
+import User from '../database/models/User';
 import BookService from './book.service';
+import { resp, respM } from '../utils/resp';
 
 class WishlistService {
 
     private model: ModelStatic<Wishlist> = Wishlist;
     private book = new BookService();
+
+    async get(id: number) {
+        const wishlist = await User.findOne({
+            where: { id },
+            attributes: { exclude: ['password', 'email'],}, 
+            include: { model: Book, as: 'books'}
+        });
+
+        return resp(200, wishlist);
+    }
 
     async getOne(bookId: number, userId: number) {
         const wishlist = await this.model.findOne({

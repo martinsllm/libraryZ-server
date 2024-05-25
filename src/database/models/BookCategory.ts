@@ -18,7 +18,8 @@ BookCategory.init({
           key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
       },
       categoryId: {
         type: sequelize.INTEGER,
@@ -28,7 +29,8 @@ BookCategory.init({
           key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        primaryKey: true
       }
 }, {
     sequelize: db,
