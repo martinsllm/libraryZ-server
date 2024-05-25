@@ -37,7 +37,7 @@ class BookService {
         if(error) return respM(422, error.message);
 
         const categories = await this.category.get(book.categories!);
-        if(categories.status == 404) return respM(categories.status, categories.message);
+        if(categories.status == 404) return respM(404, categories.message);
 
         const createdBook = await this.model.create({ ...book });
 
