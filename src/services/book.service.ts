@@ -48,7 +48,6 @@ class BookService {
 
     async update(book: IBook, id: number) {
         const { error } = schema.book.validate(book);
-
         if(error) return respM(422, error.message);
         
         const foundBook = await this.getOne(id);

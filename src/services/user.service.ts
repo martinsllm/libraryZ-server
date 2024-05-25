@@ -16,7 +16,6 @@ class UserService {
 
     async create(user: IUser) {
         const { error } = schema.user.validate(user);
-
         if(error) return respM(422, error.message);
 
         const createdUser = await this.model.create({
@@ -38,11 +37,9 @@ class UserService {
         });
 
         if(!user) return respM(404, 'User not found!');
-
         const { id, email } = user as User;
 
         const token = sign({ id, email });
-
         return resp(200, { id, email, token });
     }
 }
