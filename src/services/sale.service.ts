@@ -1,5 +1,6 @@
 import { ModelStatic } from 'sequelize';
 import Sale from '../database/models/Sale';
+import Book from '../database/models/Book';
 import { ISale } from '../interfaces/ISale';
 import schema from './validation/schema';
 import BookService from './book.service';
@@ -11,6 +12,15 @@ class SaleService {
     private model: ModelStatic<Sale> = Sale;
     private book = new BookService();
     private bookSale = new BookSaleService();
+
+    async get(userId: number) {
+        const sales = await this.model.findAll({
+            where: { userId },
+            include: [{ model: Book, as: 'books' }]
+        });
+
+        return resp(200, sales);
+    }
 
     async create(sale: ISale, userId: number) {
         const { error } = schema.sale.validate(sale);

@@ -6,6 +6,7 @@ const control = new SaleController();
 
 const saleRouter = Router();
 
+saleRouter.get('/', verifyToken, control.get.bind(control));
 saleRouter.post('/', verifyToken, control.create.bind(control));
 
 export default saleRouter;
