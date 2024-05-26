@@ -13,6 +13,17 @@ class BookService {
     private category = new CategoryService();
     private bookCategory = new BookCategoryService();
 
+    async find(books: { bookId: number, quantity: number }[]) {
+        const foundBooks = await Promise.all(books.map( async (e) => {
+            return await this.model.findByPk(e.bookId)
+        }));
+
+        if(foundBooks.some((e) => !e)) return respM(404, 'Book not found!');
+
+        return resp(200, foundBooks);
+
+    }
+
     async get() {
         const books = await this.model.findAll();
         return resp(200, books);
